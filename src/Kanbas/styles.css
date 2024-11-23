@@ -1,0 +1,81 @@
+body   {  margin: 0;  padding: 0;  }
+body * {  font-family: Arial, Helvetica, sans-serif;  }
+
+@media (min-width: 768px) {
+  #wd-kanbas .wd-main-content-offset {
+    padding-left: 140px !important;
+  }
+}
+
+.list-group.wd > .list-group-item.active {
+  color: black;
+  background-color: white;
+  border-left: 3px solid black !important;
+}
+
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px; 
+  color: #6c757d;
+  font-size: 18px; 
+}
+
+.search-input {
+  width: 300px; 
+  padding-left: 35px; /* 给输入框增加左边内边距，左边空出来的space放置放大镜 */
+  height: 40px; 
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 16px; 
+  color: #495057; 
+}
+.search-input::placeholder {
+  color: #6c757d; /* placeholder text's color */
+}
+
+
+.wd-assignment-link {
+  color: black; /* 自定义颜色，替换为你想要的颜色 */
+  text-decoration: none; /* 去掉下划线 */
+}
+
+
+
+@media (min-width: 768px) {
+  #wd-account-screen .wd-account-content-offset {
+    padding-left: 40px !important;
+  }
+}
+
+
+@media (min-width: 768px) {
+  #assignment-editScreen-downPart .wd-assignemnt-editScreen-offset {
+    padding-left: 200px !important;
+  }
+}
+
+
