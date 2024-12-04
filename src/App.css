@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+
+.ql-toolbar {
+  border: none !important;
+  background-color: transparent; 
+}
+
+
+.ql-container {
+  border-top: none !important;
+  border: 1px solid #ddd !important; 
+  border-radius: 0 0 4px 4px; 
+}
+
+
+.ql-editor {
+  min-height: 200px; /* Set the minimum height for the text area */
+  padding: 10px; /* Add padding inside the editor */
+}

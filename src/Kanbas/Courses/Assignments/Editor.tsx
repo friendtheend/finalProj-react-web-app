@@ -77,6 +77,8 @@ export default function AssignmentEditor(
     fetchAssignments();
   }, []);
 
+
+
   return (
     <form>
       <div id="wd-assignments-editor" className="row mb-3">
