@@ -10,6 +10,7 @@ import {
   } from "./reducer";
 
   import * as coursesClient from "../client";
+import QuizEditor_Questions from "./QuizEditor_Questions";
 
 export default function QuizEditor() {
 const { cid, quizId } = useParams();
@@ -112,6 +113,7 @@ return(
         {activeTab == "details" && (
             <QuizEditor_Details quizzes={quizzes}/>    
         )}
+        {activeTab === "questions" && <QuizEditor_Questions quizzes={quizzes} />}
     </div>
 
    

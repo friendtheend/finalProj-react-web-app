@@ -69,7 +69,6 @@ export default function QuizControls({
           </button>
           
 
-
         </div>
       </ProtectedFaculty>
     </div>
