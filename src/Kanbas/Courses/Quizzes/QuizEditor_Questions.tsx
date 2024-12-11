@@ -204,7 +204,7 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
                     className="wd-quiz-link"
                     href={`#/Kanbas/Courses/${cid}/Quizzes/${quizId}/questionEditor/${question._id}`}
                   >
-                    <b>{question.description}</b>
+                    <b>{question.title}</b>
                   </a>
 
                   {/* <a

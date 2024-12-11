@@ -16,9 +16,12 @@ const questionSlice = createSlice({
         
         _id: new Date().getTime().toString(),
         course: question.course,
+        pts:question.pts,
         name: question.name,
         description:question.description,
         quizId:question.quizId,
+        title:question.title,
+        type:question.type,
         answers: [],
     };
       state.questions = [...state.questions, newAnswer] as any;

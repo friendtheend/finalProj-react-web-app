@@ -49,8 +49,8 @@ export default function AddQuestionPage(
     // }
 
 ) {
-    const { cid, quizId,questionId } = useParams();
-    const [answers, setAnswers] = useState<string[]>([""]);
+    const { cid, quizId, questionId } = useParams();
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -59,12 +59,154 @@ export default function AddQuestionPage(
     console.log("Questions in component:", questions);
     const question = questions.find((q: any) => q._id === questionId);
     // const [questionId, setQuestionId] = useState(question?._id ?? "New");
-    // const [questionTitle, setQuestionTitle] = useState(question?.name ?? "Unnamed");
+
+    const [answers, setAnswers] = useState(
+        question?.answers ?? [] // 初始化为空数组
+      );
     const [questionDescription, setQuestionDescription] = useState(question?.description ?? "no Description");
+    const [questionPts, setQuestionPts] = useState(question?.pts ?? "10");
+    const [questionTitle, setQuestionTitle] = useState(question?.title ?? "default title");
+    const [questionType, setQuestionType] = useState(question?.type ?? "Multiple Choice");
     const [isAddQuestionPage, setIsAddQuestionPage] = useState(false);
-    const handleAddAnswer = () => {
-        setAnswers([...answers, ""]); // 添加一个新的空答案
+
+    const handleAnswerChange = (index: any, value:any) => {
+        // const updatedAnswers = [...answers];
+        // updatedAnswers[index].text = value;
+        const updatedAnswers = answers.map((answer:any, i:any) =>
+            i === index ? { ...answer, text: value } : answer // 创建新对象
+          );
+        setAnswers(updatedAnswers);
+      };
+      
+      const handleAddAnswer = () => {
+        setAnswers([...answers, { _id: new Date().getTime(), text: "", isCorrect: false }]);
+      };
+      
+      const handleDeleteAnswer = (index: any) => {
+        setAnswers(answers.filter((_: { id: any; text: any; isCorrect: any }, i: any) => i !== index));
+      };
+      
+
+    const renderAnswersSection = () => {
+        switch (questionType) {
+            case "True/False":
+              
+                return (
+                    <div>
+                        <label>
+                            <input
+                                type="radio"
+                                name="correctAnswer"
+                            // value="True"
+                            // onChange={() => setCorrectAnswer("True")}
+                            />
+                            True
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="correctAnswer"
+                            // value="False"
+                            // onChange={() => setCorrectAnswer("False")}
+                            />
+                            False
+                        </label>
+                    </div>
+                );
+
+            case "Multiple Choice":
+               
+                return (
+                    <div>
+                        {answers.map((answer:any, index:any) => (
+                            <div key={index} className="d-flex align-items-left ms-2">
+                                <label className="col-sm-4 text-end col-form-label " style={{ fontWeight: 'bold' }}>
+                                    Possible Answer
+                                </label>
+                                <input
+                                    type="text"
+
+                                    //   value={answer}
+                                    //   onChange={(e) => handleAnswerChange(index, e.target.value)}
+                                    className="form-control"
+                                    // placeholder={`Possible Answer ${index + 1}`}
+                                    style={{ width: '40%' }}
+                                />
+                                <div className="row mb-3">
+
+
+                                </div>
+                                {/* <button onClick={() => handleDeleteAnswer(index)}>Delete</button> */}
+                            </div>
+                        ))}
+                        <button
+                            style={{
+                                marginTop: "10px",
+                                marginLeft: "auto",
+                                color: "#007bff",
+                                cursor: "pointer",
+                                background: "none",
+                                border: "none",
+                            }}
+                            onClick={handleAddAnswer}
+                        >
+                            + Add Another Answer
+                        </button>
+                    </div>
+                );
+
+            case "Fill In the Blank":
+              
+                return (
+                    <div>
+                        {answers.map((answer:any, index:any) => (
+                            <div key={index} className="d-flex align-items-center">
+                                <label className="col-sm-4 text-end col-form-label " style={{ fontWeight: 'bold' }}>
+                                    Possible Answer
+                                </label>
+                                <input
+                                    type="text"
+                                    value={answer.text}
+                                    onChange={(e) => handleAnswerChange(index, e.target.value)}
+                                    className="form-control"
+                                    // placeholder={`Possible Answer ${index + 1}`}
+                                    style={{ width: '50%' }}
+                                />
+                                <button
+                                    className="btn btn-danger btn-sm ms-auto"
+                                onClick={() => handleDeleteAnswer(index)}
+
+                                >Delete</button>
+                            </div>
+                        ))}
+                        <button
+                            style={{
+                                marginTop: "10px",
+                                marginRight: "auto",
+                                color: "#007bff",
+                                cursor: "pointer",
+                                background: "none",
+                                border: "none",
+                            }}
+                            onClick={handleAddAnswer}
+                        >
+                            + Add Another Answer
+                        </button>
+                    </div>
+                );
+
+            default:
+                return null;
+        }
     };
+
+
+
+
+
+    // const handleAddAnswer = () => {
+    //     setAnswers([...answers, ""]); // 添加一个新的空答案
+    // };
 
     const handleCancel = () => {
         navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/editorDetail`);
@@ -79,18 +221,21 @@ export default function AddQuestionPage(
             quizId: quizId,
             description: questionDescription,
             course: cid,
-            answers: []
+            pts: questionPts,
+            title: questionTitle,
+            type: questionType,
+            answers: answers,
         };
         // await coursesClient.createQuestionForQuiz(cid,quizId,newQuestion);
         // dispatch(updateQuestion(updatedQuestion));
 
         // handleCancel();
         dispatch(updateQuestion(updatedQuestion));
-// success
-console.log(updatedQuestion._id)
+        // success
+        console.log(updatedQuestion._id)
         console.log("Updated Question:", updatedQuestion);
 
-        const questions = await questionsClient.updateQuestion(quizId,questionId,updatedQuestion);
+        const questions = await questionsClient.updateQuestion(quizId, questionId, updatedQuestion);
         // dispatch(setQuestions(questions));
 
         console.log("Sending updated question:", updatedQuestion);
@@ -139,6 +284,36 @@ console.log(updatedQuestion._id)
     //     }
     // }, [question]);
 
+
+    useEffect(() => {
+        if (question?.answers) {
+          // 如果 question 有 answers，从中加载数据
+          setAnswers(question.answers);
+        } else {
+          // 如果 question 没有 answers，根据 questionType 初始化
+          switch (questionType) {
+            case "True/False":
+              setAnswers([
+                { id: 1, text: "True", isCorrect: false },
+                { id: 2, text: "False", isCorrect: false },
+              ]);
+              break;
+      
+            case "Multiple Choice":
+              setAnswers([{ id: 1, text: "", isCorrect: false }]);
+              break;
+      
+            case "Fill In the Blank":
+              setAnswers([{ id: 1, text: "", isCorrect: true }]);
+              break;
+      
+            default:
+              setAnswers([]);
+          }
+        }
+      }, [question, questionType]);
+      
+      
     console.log("question Description", questionDescription)
 
     return (
@@ -146,7 +321,57 @@ console.log(updatedQuestion._id)
         <div id='quiz-details'>
 
             <div>
-                <p>easy question part</p>
+
+
+                <div
+                    className="d-flex align-items-center justify-content-between"
+                    style={{ gap: '10px' }}
+                >
+
+                    <label
+                        htmlFor="quiz-title"
+                        className="text-left"
+                        style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}
+                    >
+                        Quiz Title:
+                    </label>
+                    <input
+                        id="quiz-title"
+                        value={questionTitle}
+                        onChange={(e) => setQuestionTitle(e.target.value)}
+                        className="form-control"
+                        style={{ width: '25%' }}
+                    />
+                    <div className="d-flex align-items-center" style={{ gap: '10px', flexGrow: 1 }}>
+
+                        <select className="form-select"
+                            style={{ width: '50%' }}
+                            value={questionType}
+                            onChange={(e) => setQuestionType(e.target.value)}>
+                            <option value="Fill In the Blank" >Fill In the Blank</option>
+                            <option value="Multiple Choice" >Multiple Choice</option>
+                            <option value="True/False" >True/False</option>
+                        </select>
+                    </div>
+                    <div className="d-flex align-items-center" style={{ gap: '5px' }}>
+                        <label
+                            htmlFor="quiz-pts"
+                            className="text-right"
+                            style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}
+                        >
+                            pts:
+                        </label>
+                        <input
+                            id="quiz-pts"
+                            className="form-control"
+                            style={{ width: '50px', textAlign: 'center' }}
+                            value={questionPts}
+                            onChange={(e) => setQuestionPts(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+
             </div>
 
             <hr />
@@ -208,39 +433,15 @@ console.log(updatedQuestion._id)
                         style={{ display: "block", fontWeight: "bold", marginBottom: "10px" }}>
                         Answers:
                     </label>
-                    <div className="row mb-3">
-                        <label htmlFor="wd-possibleAnswer" className="col-sm-4 text-end col-form-label " style={{ fontWeight: 'bold' }}>
-                            Possible Answer
-                        </label>
-                        <div className="col-sm-8 text-start">
-                            <input
-                                id="wd-possibleAnswer"
-                                // value={questionTitle}
-                                className="form-control col"
-                                // onChange={(e) => setQuestionTitle(e.target.value)}
-                                style={{ width: "50%" }}
-                            />
-                        </div>
-                    </div>
+                    {renderAnswersSection()}
+
 
 
                     <br />
 
                 </div>
 
-                <button
-                    style={{
-                        marginTop: "10px",
-                        marginLeft: "auto",
-                        color: "#007bff",
-                        cursor: "pointer",
-                        background: "none",
-                        border: "none",
-                    }}
-                    onClick={handleAddAnswer}
-                >
-                    + Add Another Answer
-                </button>
+
             </div>
             <hr />
 
