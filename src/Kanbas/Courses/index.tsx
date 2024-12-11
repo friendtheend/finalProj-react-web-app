@@ -10,9 +10,12 @@ import Quizzes from './Quizzes'
 import { useEffect, useState } from "react";
 import * as db from "../Database";
 import QuizDetails from "./Quizzes/QuizDetails";
+import QuizAddQuestionEditor from "./Quizzes/QuizEditor_Questions";
 import QuizEditor from "./Quizzes/QuizEditor";
+import QuestionEditor from "./Quizzes/Questions/QuizEditor_AddQuestion";
 import * as coursesClient from "./client";
 import { useDispatch, useSelector } from "react-redux";
+
 
 import {
   setQuizzes,
@@ -71,7 +74,13 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="People" element={<PeopleTable />} />
             <Route path="Quizzes" element={<Quizzes />} />
             <Route path="Quizzes/:quizId" element={<QuizDetails />} />
-            <Route path="Quizzes/:quizId/editor" element={<QuizEditor />} />
+            <Route path="Quizzes/:quizId/editorDetail" element={<QuizEditor />} />
+            <Route path="Quizzes/:quizId/questionEditor/:questionId" element={
+              <QuestionEditor 
+            />
+            } 
+            />
+            {/* <Route path="Quizzes/:quizId/addQuestion" element={<QuizAddQuestionEditor />} /> */}
           </Routes>
         </div>
       </div>

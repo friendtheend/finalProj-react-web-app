@@ -43,7 +43,7 @@ const [quizlockQuestionAfterAnswering, setlockQuestionAfterAnswering] = useState
 const [quizviewResults, setviewResults] = useState(quiz?.viewResults ?? false);
 const [quizwebcamRequired, setwebcamRequired] = useState(quiz?.webcamRequired ?? false);
 const [quizPoints, setPoint] = useState(quiz?.point ?? 0);
-const [quizPublish, setPublish] = useState(quiz.publish);
+const [quizPublish, setPublish] = useState(quiz?.publish);
 const [quizDesc, setDesc] = useState(quiz?.description ?? "new quiz");
 
 const [quizDueDate, setQuizDueDate] = useState(quiz?.dueDate ?? "2024-09-01");
@@ -235,11 +235,12 @@ return (
                 <br/>
 
                 <label
-                    htmlFor="quiz-instructions"
+                    htmlFor="quiz-quizInstructions"
                     style={{ display: "block", fontWeight: "bold", marginBottom: "10px" }}>
                     Quiz instructions:
                 </label>
                 <ReactQuill
+                id="quiz-quizInstructions"
                     value={quizDesc}
                     onChange={(e) => setDesc(e)}
                     modules={{
@@ -297,11 +298,11 @@ return (
                         </div>
 
                         <div className="row mb-3">
-                            <label htmlFor="wd-group" className="col-sm-4 text-end col-form-label "  style={{ fontWeight: 'bold' }}>
+                            <label  htmlFor="wd-assignmentGroup" className="col-sm-4 text-end col-form-label "  style={{ fontWeight: 'bold' }}>
                                 Assignment Group
                             </label>
                             <div className="col-sm-8 text-start">
-                                <select id="wd-submission-type" className="form-select"
+                                <select id="wd-assignmentGroup" className="form-select"
                                 value={quizAssignmentGroup}
                                 onChange={(e) => setAssignmentGroup(e.target.value)} 
                                 style={{ width: "50%" }}>
@@ -314,12 +315,12 @@ return (
                         </div>
 
                         <div className="row mb-3">
-                            <label htmlFor="wd-points" className="col-sm-4 text-end col-form-label "  style={{ fontWeight: 'bold' }}>
+                            <label htmlFor="wd-QuizAccessCode" className="col-sm-4 text-end col-form-label "  style={{ fontWeight: 'bold' }}>
                                 Access Code
                             </label>
                             <div className="col-sm-8 text-start">
                             <input
-                                id="wd-name"
+                                id="wd-QuizAccessCode"
                                 value={quizAccessCode}
                                 className="form-control col"
                                 onChange={(e) => setAccessCode(e.target.value)}
@@ -329,7 +330,7 @@ return (
                         </div>
 
                         <div className="row mb-1">
-                            <label htmlFor="wd-points" className="col-sm-4 text-end"  style={{ fontWeight: 'bold' }}>
+                            <label htmlFor="wd-quizShuffleAnswers" className="col-sm-4 text-end"  style={{ fontWeight: 'bold' }}>
                                 
                             </label>
                             <div className="col-sm-8 text-start">
@@ -340,7 +341,7 @@ return (
                                 <input
                                     className="form-check-input me-2"
                                     type="checkbox"
-                                    id="wd-shuffle"
+                                    id="wd-quizShuffleAnswers"
                                     checked = {quizShuffleAnswers}
                                     onChange={(e) => setShuffleAnswers(e.target.checked)}
                                 />
@@ -360,11 +361,11 @@ return (
                                         <input
                                         className="form-check-input me-1"
                                         type="checkbox"
-                                        id="wd-limit"
+                                        id="quiz-TimeLimit"
                                         checked={quizTimeLimit}
                                         onChange={(e) => setTimeLimit(e.target.checked)}
                                         />
-                                        <label className="form-check-label me-5" htmlFor="wd-limit">
+                                        <label className="form-check-label me-5" htmlFor="quiz-TimeLimit">
                                             Time Limit
                                         </label>
                                     </div>
@@ -373,7 +374,7 @@ return (
                                         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                                         <input
                                             className="form-check-input me-1"
-                                            id="wd-limit"
+                                            id="quiz-minutes"
                                             value={quizTimeAllowed}
                                             style={{
                                             width: "50px", 
@@ -383,7 +384,7 @@ return (
                                             type="number"
                                             min="1"
                                         />
-                                        <label className="form-check-label" htmlFor="wd-limit">
+                                        <label className="form-check-label" htmlFor="quiz-minutes">
                                             Minutes
                                         </label>
                                         </div>
@@ -405,11 +406,11 @@ return (
                                     <input
                                     className="form-check-input me-2"
                                     type="checkbox"
-                                    id="wd-limit"
+                                    id="quiz-AllowMultipleAttempts"
                                     checked={quizmultiAttempts}
                                     onChange={(e) => setmultiAttempts(e.target.checked)}
                                     />
-                                    <label className="form-check-label me-5" htmlFor="wd-limit">
+                                    <label className="form-check-label me-5" htmlFor="quiz-AllowMultipleAttempts">
                                         Allow Multiple Attempts
                                     </label>
                                 </div>
@@ -418,7 +419,7 @@ return (
                                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                                     <input
                                         className="form-check-input me-2"
-                                        id="wd-limit"
+                                        id="quiz-AttemptsAllowed"
                                         style={{
                                         width: "50px", 
                                         height: "30px", 
@@ -429,7 +430,7 @@ return (
                                         min="2"
                                         step = "1"
                                     />
-                                    <label className="form-check-label" htmlFor="wd-limit">
+                                    <label className="form-check-label" htmlFor="quiz-AttemptsAllowed">
                                         Attempts Allowed
                                     </label>
                                     </div>
@@ -441,11 +442,11 @@ return (
                                 <input
                                     className="form-check-input me-2"
                                     type="checkbox"
-                                    id="wd-shuffle"
+                                    id="quiz-ShowCorrectAnswers"
                                     checked = {quizshowCorrectAnswers}
                                     onChange={(e) => setshowCorrectAnswers(e.target.checked)}
                                 />
-                                    <label className="form-check-label" htmlFor="wd-shuffle">
+                                    <label className="form-check-label" htmlFor="quiz-ShowCorrectAnswers">
                                         Show Correct Answers{" "}
                                     </label>
                                 <br/>
@@ -454,11 +455,11 @@ return (
                                 <input
                                     className="form-check-input me-2"
                                     type="checkbox"
-                                    id="wd-shuffle"
+                                    id="quiz-oneQuestionAtATime"
                                     checked = {quizoneQuestionAtATime}
                                     onChange={(e) => setoneQuestionAtATime(e.target.checked)}
                                 />
-                                    <label className="form-check-label" htmlFor="wd-shuffle">
+                                    <label className="form-check-label" htmlFor="quiz-oneQuestionAtATime">
                                         One Question at a Time{" "}
                                     </label>
                                 <br/>
@@ -467,11 +468,11 @@ return (
                                 <input
                                     className="form-check-input me-2"
                                     type="checkbox"
-                                    id="wd-shuffle"
+                                    id="quiz-WebcamRequired"
                                     checked = {quizwebcamRequired}
                                     onChange={(e) => setwebcamRequired(e.target.checked)}
                                 />
-                                    <label className="form-check-label" htmlFor="wd-shuffle">
+                                    <label className="form-check-label" htmlFor="quiz-WebcamRequired">
                                         Webcam Required{" "}
                                     </label>
                                 <br/>
@@ -480,11 +481,11 @@ return (
                                 <input
                                     className="form-check-input me-2"
                                     type="checkbox"
-                                    id="wd-shuffle"
+                                    id="quiz-LockQuestions"
                                     checked = {quizlockQuestionAfterAnswering}
                                     onChange={(e) => setlockQuestionAfterAnswering(e.target.checked)}
                                 />
-                                    <label className="form-check-label" htmlFor="wd-shuffle">
+                                    <label className="form-check-label" htmlFor="quiz-LockQuestions">
                                         Lock Questions After Answering{" "}
                                     </label>
                                 <br/>
@@ -496,12 +497,12 @@ return (
                     <br/>
                     <div className="row mb-3" >
 
-                        <label htmlFor="wd-assign" className="col-sm-4 col-form-label text-end" style={{ fontWeight: 'bold' }}>
+                        <label htmlFor="quiz-Assign" className="col-sm-4 col-form-label text-end" style={{ fontWeight: 'bold' }}>
                             Assign
                         </label>
 
                         <div className="col-sm-8" style={{ width: "50%" }}>
-                            <div className="form-control">
+                            <div className="form-Assign">
                                 <label
                                 htmlFor="wd-assign-to"
                                 className="col-sm-2 col-form-label"

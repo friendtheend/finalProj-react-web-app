@@ -11,10 +11,20 @@ import {
 
   import * as coursesClient from "../client";
 import QuizEditor_Questions from "./QuizEditor_Questions";
+import {
+    setQuestions,
+  } from "./Questions/reducer";
+import { useSearchParams } from "react-router-dom";
+
+
+
+
 
 export default function QuizEditor() {
+const [searchParams] = useSearchParams();
 const { cid, quizId } = useParams();
 const { quizzes } = useSelector((state: any) => state.quizzesReducer);
+const { questions } = useSelector((state: any) => state.questionsReducer);
 const quiz = quizzes.find((q: any) => q._id === quizId);
 const [activeTab, setActiveTab] = useState("details");
 const [quizPoints, setPoint] = useState(quiz?.point ?? 0);
@@ -26,9 +36,24 @@ const fetchQuizzes = async () => {
     dispatch(setQuizzes(quizzes));
   };
 
+
+const fetchQuestions = async () => {
+    const questions = await coursesClient.findQuestionsForQuiz(cid , quizId);
+    dispatch(setQuestions(questions));
+  };
+
+
 useEffect(() => {
 fetchQuizzes();
+fetchQuestions();
 }, []);
+
+
+
+
+// console.log(quizzes)
+// console.log(questions)
+// console.log(quizId,"quizId")
 
 
 
@@ -113,7 +138,7 @@ return(
         {activeTab == "details" && (
             <QuizEditor_Details quizzes={quizzes}/>    
         )}
-        {activeTab === "questions" && <QuizEditor_Questions quizzes={quizzes} />}
+        {activeTab === "questions" && <QuizEditor_Questions questions={questions} />}
     </div>
 
    

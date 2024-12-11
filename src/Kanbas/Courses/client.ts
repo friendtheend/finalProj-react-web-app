@@ -25,6 +25,15 @@ export const createQuizForCourse = async (courseId: string, quiz: any) => {
     );
     return response.data;
 };
+
+export const createQuestionForQuiz = async (courseId: any, quizId: any, question:any) => {
+    const response = await axios.post(
+        `${COURSES_API}/${courseId}/quizzes/${quizId}/questions`,
+        question
+    );
+    return response.data;
+};
+
 export const fetchAllEnrollments = async () => {
     const { data } = await axios.get(`${REMOTE_SERVER}/api/enrollments`);
     return data;
@@ -58,5 +67,12 @@ export const findAssignmentsForCourse = async (courseId: string) => {
 export const findQuizzesForCourse = async (courseId: string) => {
     const response = await axios
         .get(`${COURSES_API}/${courseId}/quizzes`);
+    return response.data;
+};
+
+
+export const findQuestionsForQuiz = async (courseId:any, quizId: any) => {
+    const response = await axios
+        .get(`${COURSES_API}/${courseId}/quizzes/${quizId}`);
     return response.data;
 };

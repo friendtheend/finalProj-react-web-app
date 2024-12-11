@@ -25,6 +25,7 @@ export default function Quizzes() {
   const [QuizName, setQuizName] = useState("");
   const [selectedquizID, setSelectedQuizID] = useState("Null")
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
+  console.log("all quizess",quizzes)
   const now = new Date(); // 日期判断
   const dispatch = useDispatch();
   const createQuizForCourse = async () => {

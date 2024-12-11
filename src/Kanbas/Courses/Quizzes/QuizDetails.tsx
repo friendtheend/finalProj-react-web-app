@@ -49,7 +49,7 @@ const [quizAvailableUntilDate, setQuizAvailableUntilDate] = useState(quiz?.avail
 // }, []);
 
 const EditButtonClick = () => {
-navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/editor`);
+navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/editorDetail`);
 };
 
 
