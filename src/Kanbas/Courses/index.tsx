@@ -10,6 +10,7 @@ import Quizzes from './Quizzes'
 import { useEffect, useState } from "react";
 import * as db from "../Database";
 import QuizDetails from "./Quizzes/QuizDetails";
+import QuizDo from "./Quizzes/QuizDo";
 import QuizAddQuestionEditor from "./Quizzes/QuizEditor_Questions";
 import QuizEditor from "./Quizzes/QuizEditor";
 import QuestionEditor from "./Quizzes/Questions/QuizEditor_AddQuestion";
@@ -77,6 +78,7 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Quizzes/:quizId" element={<QuizDetails />} />
             <Route path="Quizzes/:quizId/editorDetail" element={<QuizEditor />} />
             <Route path="Quizzes/:quizId/preview" element={<QuizPreview />} />
+            <Route path="Quizzes/:quizId/do" element={<QuizDo />} />
             <Route path="Quizzes/:quizId/questionEditor/:questionId" element={
               <QuestionEditor 
             />

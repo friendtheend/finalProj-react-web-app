@@ -175,14 +175,51 @@ export default function QuizPreview() {
                                 {question.title} {question.text} {question.type}
                             </strong>
                         </p>
-                        {question.type === "Fill In The Blank" && (
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={answers[question._id] || ""}
-                                onChange={(e) => handleAnswerChange(question._id, e.target.value)}
-                            />
+                        {question.type === "Fill in the Blank" && (
+                            <div className="form-group">
+                                <p className="question-description">{question.description}</p>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id={`${question._id}-${question.answers._id}`}
+                                    name={question._id}
+                                    placeholder="Type your answer here..."
+                                    value={answers[question._id] || ""}
+                                    onChange={(e) => handleAnswerChange(question._id, e.target.value)}
+                                />
+                            </div>
                         )}
+
+
+
+                        {question.type === "True/False" &&
+                            question.answers.map((answer: any) => (
+                                <div>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            id={`${question._id}-${answer._id}`}
+                                            name={question._id}
+                                            value="True"
+                                            checked={answers[question._id] === "True"}
+                                            onChange={() => handleAnswerChange(question._id, answer.text)}
+                                        />
+                                        True
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            id={`${question._id}-${answer._id}`}
+                                            name={question._id}
+                                            value="False"
+                                            checked={answers[question._id] === "False"}
+                                            onChange={() => handleAnswerChange(question._id, answer.text)}
+                                        />
+                                        False
+                                    </label>
+                                </div>
+                            ))}
+
                         {question.type === "Multiple Choice" &&
                             question.answers.map((answer: any) => (
                                 <div key={answer._id} className="form-check">

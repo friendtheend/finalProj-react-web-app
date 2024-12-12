@@ -48,7 +48,6 @@ const quizzesSlice = createSlice({
       ) as any;
     },
 
-
     editQuiz: (state, { payload: quizId }) => {
       state.quizzes = state.quizzes.map((a: any) =>
         a._id === quizId ? { ...a, editing: true } : a

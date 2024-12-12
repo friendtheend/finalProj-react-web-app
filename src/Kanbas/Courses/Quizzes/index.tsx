@@ -42,7 +42,6 @@ export default function Quizzes() {
   };
 
 
-
   const updateStatus = async (quiz: any) => {
     await quizzesClient.updateQuiz(quiz);
     dispatch(updateQuiz(quiz));
