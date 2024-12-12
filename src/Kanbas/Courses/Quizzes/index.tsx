@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { format } from 'date-fns';
 import QuizSectionButtons from "./QuizSectionButtons";
+import {getQuiz} from "./client";
 
 export default function Quizzes() {
   const { cid } = useParams();
@@ -39,6 +40,8 @@ export default function Quizzes() {
     await quizzesClient.deleteQuiz(quizId);
     dispatch(deleteQuiz(quizId));
   };
+
+
 
   const updateStatus = async (quiz: any) => {
     await quizzesClient.updateQuiz(quiz);
