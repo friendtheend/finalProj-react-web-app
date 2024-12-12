@@ -14,9 +14,9 @@ import {
 import {
     addQuestion,
     setQuestions,
-  } from "./Questions/reducer";
+} from "./Questions/reducer";
 import { format } from 'date-fns';
-import { FaEllipsisV } from "react-icons/fa";
+import { FaEdit, FaEllipsisV } from "react-icons/fa";
 import GreenCheckmark from "../Modules/GreenCheckmark";
 import { MdBlockFlipped } from "react-icons/md";
 import ReactQuill from "react-quill";
@@ -41,11 +41,11 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
 
     const handleSave = async () => {
         createQuestionForQuiz();
-  
+
         setIsAddQuestionPage(false); // 切换回原始页面
-      };
-    
- 
+    };
+
+
     const [questionAnswer, setQuestionAnswer] = useState(questions?.answer ?? "answer1");
 
     const [activeTab, setActiveTab] = useState("details");
@@ -59,7 +59,7 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
         };
 
 
-        const question = await coursesClient.createQuestionForQuiz(cid,quizId, newQuestion);
+        const question = await coursesClient.createQuestionForQuiz(cid, quizId, newQuestion);
         console.log("New Question:", question);
         dispatch(addQuestion(question));
     };
@@ -80,7 +80,7 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
     //         const updatedQuiz = {
     //             course: cid,
     //             _id: questionId,
-                
+
     //             answer: questionAnswer,
     //         };
 
@@ -133,9 +133,10 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
 
     // 处理点击 "Add Question" 按钮
     const handleAddQuestionButton = () => {
-        navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/questions`);
+        const uniqueId = Date.now(); // 获取当前时间戳作为唯一标识符
+        navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/questionEditor/new`);
 
-        setIsAddQuestionPage(true); // 切换到添加问题页面
+        // setIsAddQuestionPage(true); // 切换到添加问题页面
     };
 
 
@@ -144,19 +145,19 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
     };
 
 
-    
+
     const fetchQuestions = async () => {
-        const questions = await coursesClient.findQuestionsForQuiz(cid , quizId);
+        const questions = await coursesClient.findQuestionsForQuiz(cid, quizId);
         dispatch(setQuestions(questions));
-      };
-    
-    
+    };
+
+
     useEffect(() => {
- 
-    fetchQuestions();
+
+        fetchQuestions();
     }, []);
-  
-// console.log("questions",questions)
+
+    // console.log("questions",questions)
 
     return (
         <div id="quiz-editor">
@@ -166,112 +167,109 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
                 // // questions={questions}
                 // />
             ) : ( */}
-                <div>
-             
-
-
-               <ul id="wd-quiz-list" className="list-group rounded-0">
-        <li className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray ">
-          <div className="wd-title p-3 ps-2 bg-secondary d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center">
-              {/* <BsGripVertical className="me-1 fs-3" /> */}
-              
-              Quiz Questions
-            </div>
-          </div>
-        </li>
-
-      </ul>
+            <div>
 
 
 
-      {questions
-          .map((question: any) => (
+                <ul id="wd-quiz-list" className="list-group rounded-0">
+                    <li className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray ">
+                        <div className="wd-title p-3 ps-2 bg-secondary d-flex align-items-center justify-content-between">
+                            <div className="d-flex align-items-center">
+                                Quiz Questions
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
 
 
-            <li key={question._id}  className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray">
-              <div className="quiz-row d-flex wd-lesson p-3 ps-1 align-items-center justify-content-between">
-                <div className="icon-left">
-            
-                </div>
 
-                {/* details */}
-                <div
-                  className="quiz-details flex-grow-1 ps-1"
-                  style={{ fontSize: "16px" }}
+                {questions
+                    .map((question: any) => (
+                        <li key={question._id} className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray">
+                            {/* details */}
+                            <div
+                                className="quiz-details flex-grow-1 ps-1"
+                                style={{ fontSize: "16px" }}
+                            >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    {/* <a
+                                        className="wd-quiz-link"
+                                        href={`#/Kanbas/Courses/${cid}/Quizzes/${quizId}/questionEditor/${question._id}`}
+                                    > */}
+                                        <b>{question.title}</b>
+                                    {/* </a> */}
+
+                                    <a
+                                        href={`#/Kanbas/Courses/${cid}/Quizzes/${quizId}/questionEditor/${question._id}`}
+                                        style={{ marginLeft: 'auto' }}
+                                    >
+                                        <FaEdit
+                                            className="me-3"
+                                            style={{ fontSize: "20px", color: "green" }}
+                                        />
+                                    </a>
+                                </div>
+
+
+
+                                <hr />
+                            </div>
+
+
+
+
+
+                        </li>
+                    ))}
+
+
+
+
+                <button
+                    style={{
+                        display: "block",
+                        margin: "20px auto",
+                        marginBottom: "10px",
+                        padding: "10px 10px",
+                        border: "1px solid #ccc",
+                        borderRadius: "5px",
+                        background: "white",
+                    }}
+                    onClick={handleAddQuestionButton}
                 >
-                  <a
-                    className="wd-quiz-link"
-                    href={`#/Kanbas/Courses/${cid}/Quizzes/${quizId}/questionEditor/${question._id}`}
-                  >
-                    <b>{question.title}</b>
-                  </a>
-
-                  {/* <a
-                    className="wd-quiz-link"
-                    href={`#/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`}
-                  >
-                    <b>{quiz.title}</b>
-                  </a> */}
-             
-<hr />
-                  
-
-                </div>
-
-
-          
-              </div>
-            </li>
-          ))}
-
-
-      
-
+                    + New Question
+                </button>
+                <hr />
+                <div style={{ display: "flex", justifyContent: "flex-start", gap: "10px" }}>
                     <button
                         style={{
-                            display: "block",
-                            margin: "20px auto",
-                            marginBottom: "10px",
-                            padding: "10px 10px",
+                            padding: "10px 20px",
+                            background: "#f8f9fa",
                             border: "1px solid #ccc",
                             borderRadius: "5px",
-                            background: "white",
+                            cursor: "pointer",
                         }}
-                        onClick={handleAddQuestionButton}
+                        onClick={() => alert("Cancel Clicked")}
                     >
-                        + New Question
+                        Cancel
                     </button>
-                    <hr />
-                    <div style={{ display: "flex", justifyContent: "flex-start", gap: "10px" }}>
-                        <button
-                            style={{
-                                padding: "10px 20px",
-                                background: "#f8f9fa",
-                                border: "1px solid #ccc",
-                                borderRadius: "5px",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => alert("Cancel Clicked")}
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            style={{
-                                padding: "10px 20px",
-                                background: "#d9534f",
-                                border: "none",
-                                borderRadius: "5px",
-                                color: "white",
-                                cursor: "pointer",
-                            }}
-                            onClick = {handleSave}
-                        >
-                            Save
-                        </button>
-                    </div>
+                    <button
+                        style={{
+                            padding: "10px 20px",
+                            background: "#d9534f",
+                            border: "none",
+                            borderRadius: "5px",
+                            color: "white",
+                            cursor: "pointer",
+                        }}
+                        onClick={handleSave}
+                    >
+                        Save
+                    </button>
                 </div>
-            
+            </div>
+
         </div>
     );
     // return (
