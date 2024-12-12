@@ -37,7 +37,7 @@ const [quizAccessCode, setAccessCode] = useState(quiz?.accessCode ?? "");
 const [quizmultiAttempts, setmultiAttempts] = useState(quiz?.multipleAttempts ?? false);
 const [quizAttemptsAllowed, setAttemptsAllowed] = useState(quiz?.attemptsAllowed ?? 2);
 const [quizshowCorrectAnswers, setshowCorrectAnswers] = useState(quiz?.showCorrectAnswers.show ?? false);
-const [quizshowCorrectAnswers_when, setshowCorrectAnswers_when] = useState(quiz?.showCorrectAnswers.when ?? "-");
+const [quizshowCorrectAnswers_when, setshowCorrectAnswers_when] = useState(quiz?.showCorrectAnswers.when ?? "Immediately");
 const [quizoneQuestionAtATime, setoneQuestionAtATime] = useState(quiz?.oneQuestionAtATime ?? true);
 const [quizlockQuestionAfterAnswering, setlockQuestionAfterAnswering] = useState(quiz?.lockQuestionAfterAnswering ?? false);
 const [quizviewResults, setviewResults] = useState(quiz?.viewResults ?? false);
@@ -46,10 +46,12 @@ const [quizPoints, setPoint] = useState(quiz?.point ?? 0);
 const [quizPublish, setPublish] = useState(quiz?.publish);
 const [quizDesc, setDesc] = useState(quiz?.description ?? "new quiz");
 
-const [quizDueDate, setQuizDueDate] = useState(quiz?.dueDate ?? "2024-09-01");
-const [quizAvailableFromDate, setQuizAvailableFromDate] = useState(quiz?.availableFromDate ?? "2024-08-15");
-const [quizAvailableUntilDate, setQuizAvailableUntilDate] = useState(quiz?.availableUntilDate ?? "2024-09-01");
+const [quizDueDate, setQuizDueDate] = useState(quiz?.dueDate ?? "2024-09-01T09:00:00");
+const [quizAvailableFromDate, setQuizAvailableFromDate] = useState(quiz?.availableFromDate ?? "2024-08-15T09:00:00");
+const [quizAvailableUntilDate, setQuizAvailableUntilDate] = useState(quiz?.untilDate ?? "2024-09-01T09:00:00");
 const [activeTab, setActiveTab] = useState("details");
+
+console.log(quizAvailableFromDate)
 
 const createQuizForCourse = async () => {
     if (!cid) return;
@@ -437,8 +439,13 @@ return (
                                 )}
                                 </div>
                                 <br/>
-                                <br/>
 
+                                <div
+                                style={{
+                                    display: "flex", 
+                                    alignItems: "center",
+                                }}
+                                >
                                 <input
                                     className="form-check-input me-2"
                                     type="checkbox"
@@ -446,10 +453,29 @@ return (
                                     checked = {quizshowCorrectAnswers}
                                     onChange={(e) => setshowCorrectAnswers(e.target.checked)}
                                 />
-                                    <label className="form-check-label" htmlFor="quiz-ShowCorrectAnswers">
+                                    <label className="form-check-label me-5" htmlFor="quiz-ShowCorrectAnswers">
                                         Show Correct Answers{" "}
                                     </label>
-                                <br/>
+
+                                {quizshowCorrectAnswers && (
+                                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                                        <label className="form-check-label" htmlFor="quiz-minutes">
+                                            When
+                                        </label>
+                                    <input
+                                        className="form-check-input me-1"
+                                        id="quiz-minutes"
+                                        value={quizshowCorrectAnswers_when}
+                                        style={{
+                                        width: "120px", 
+                                        height: "30px", 
+                                        }}
+                                        onChange={(e) => setshowCorrectAnswers_when(e.target.value)}
+
+                                    />
+                                    </div>
+                                )}
+                                </div>
                                 <br/>
 
                                 <input
@@ -531,9 +557,9 @@ return (
                                     Due
                                 </label>
                                 <input
-                                type="date"
+                                type="datetime-local"
                                 id="wd-due-date"
-                                defaultValue={`${quizDueDate}`}
+                                defaultValue={quizDueDate.slice(0, 19)}
                                 className="form-control mb-3"
                                 onChange={(e) => setQuizDueDate(e.target.value)}
                                 />
@@ -542,9 +568,9 @@ return (
                                     <div className="col-md-6">
                                         <label htmlFor="wd-available-from"> Available from </label>
                                         <input
-                                        type="date"
+                                        type="datetime-local"
                                         id="wd-available-from"
-                                        defaultValue={`${quizAvailableFromDate}`}
+                                        defaultValue={quizAvailableFromDate.slice(0, 19)}
                                         className="form-control"
                                         onChange={(e) => setQuizAvailableFromDate(e.target.value)}
                                         />
@@ -553,9 +579,9 @@ return (
                                     <div className="col-md-6">
                                         <label htmlFor="wd-available-until"> Until </label>
                                         <input
-                                        type="date"
+                                        type="datetime-local"
                                         id="wd-available-until"
-                                        defaultValue={`${quizAvailableUntilDate}`}
+                                        defaultValue={quizAvailableUntilDate.slice(0, 19)}
                                         onChange={(e) => setQuizAvailableUntilDate(e.target.value)}
                                         className="form-control"
                                         />

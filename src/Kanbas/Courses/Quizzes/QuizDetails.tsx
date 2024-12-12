@@ -32,9 +32,9 @@ const [quizviewResults, setviewResults] = useState(quiz?.viewResults ?? false);
 const [quizwebcamRequired, setwebcamRequired] = useState(quiz?.webcamRequired ?? false);
 const [quizPoints, setPoint] = useState(quiz?.point ?? false);
 
-const [quizDueDate, setQuizDueDate] = useState(quiz?.dueDate ?? "2024-09-01");
-const [quizAvailableFromDate, setQuizAvailableFromDate] = useState(quiz?.availableFromDate ?? "2024-08-15");
-const [quizAvailableUntilDate, setQuizAvailableUntilDate] = useState(quiz?.availableUntilDate ?? "2024-09-01");
+const [quizDueDate, setQuizDueDate] = useState(quiz?.dueDate ?? "2024-09-01T09:00:00");
+const [quizAvailableFromDate, setQuizAvailableFromDate] = useState(quiz?.availableFromDate ?? "2024-08-15T09:00:00");
+const [quizAvailableUntilDate, setQuizAvailableUntilDate] = useState(quiz?.untilDate ?? "2024-09-01T09:00:00");
 
 // console.log(quizzes)
 // console.log(quiz)

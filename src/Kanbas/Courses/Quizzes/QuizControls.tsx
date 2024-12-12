@@ -21,7 +21,7 @@ export default function QuizControls({
   const dispatch = useDispatch();
 
   const handleAddQuizButtonClick = () => {
-    navigate(`/Kanbas/Courses/${cid}/Quizzes/new`, {
+    navigate(`/Kanbas/Courses/${cid}/Quizzes/new/editorDetail`, {
       state: { cid,}, // pass data
     });
   };

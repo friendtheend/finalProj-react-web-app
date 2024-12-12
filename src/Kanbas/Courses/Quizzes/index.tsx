@@ -116,7 +116,7 @@ export default function Quizzes() {
                       <>
                         <b>Available</b>{" "} {format(quiz.availableFromDate, "MMM d 'at' h a")}
                       </>
-                    )} | <b>Due</b> {format(new Date(quiz.dueDate), "MMM d 'at' h a")} | {quiz.point} pts | {quiz.question_nums} Questions
+                    )} | <b>Due</b> {format(quiz.dueDate, "MMM d 'at' h a")} | {quiz.point} pts | {quiz.question_nums} Questions
 
                 </div>
 
