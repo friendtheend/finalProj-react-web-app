@@ -12,7 +12,8 @@ import accountReducer from "../../Account/reducer";
 export default function QuizDetails() {
     const { cid, quizId } = useParams();
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
-    const { role } = useSelector((state:any)=>state.accountReducer); // 获取用户角色(还未完成)
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const [role, setROLE] = useState(currentUser.role);
 
     const quiz = quizzes.find((q: any) => q._id === quizId);
     const dispatch = useDispatch();
@@ -56,30 +57,13 @@ export default function QuizDetails() {
             <div id='quiz-details'>
                 <div id='quiz-option' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-                    {/*{role === 'STUDENT' && (*/}
-                    {/*    <button className="btn btn-md btn-secondary me-1" onClick={DoButtonClick}>*/}
-                    {/*        Do*/}
-                    {/*    </button>*/}
-                    {/*)}*/}
-
-                    {/*{role === 'FACULTY' && (*/}
-                    {/*    <>*/}
-                    {/*        <button className="btn btn-md btn-secondary me-1" onClick={PreviewButtonClick}>*/}
-                    {/*            Preview*/}
-                    {/*        </button>*/}
-                    {/*        <button className="btn btn-md btn-secondary me-1" onClick={EditButtonClick}>*/}
-                    {/*            <GoPencil />*/}
-                    {/*            Edit*/}
-                    {/*        </button>*/}
-                    {/*    </>*/}
-                    {/*)}*/}
-
-
-
+                    {role === 'STUDENT' && (
                         <button className="btn btn-md btn-secondary me-1" onClick={DoButtonClick}>
                             Do
                         </button>
+                    )}
 
+                    {role === 'FACULTY' && (
                         <>
                             <button className="btn btn-md btn-secondary me-1" onClick={PreviewButtonClick}>
                                 Preview
@@ -89,6 +73,10 @@ export default function QuizDetails() {
                                 Edit
                             </button>
                         </>
+                    )}
+
+
+
 
 
                 </div>
