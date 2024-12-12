@@ -19,14 +19,14 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { format } from 'date-fns';
 import QuizSectionButtons from "./QuizSectionButtons";
-import {getQuiz} from "./client";
+import {findQuestionsForQuiz} from "../client";
 
 export default function Quizzes() {
   const { cid } = useParams();
   const [QuizName, setQuizName] = useState("");
   const [selectedquizID, setSelectedQuizID] = useState("Null")
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
-  console.log("all quizess",quizzes)
+  // console.log("all quizess",quizzes)
   const now = new Date(); // 日期判断
   const dispatch = useDispatch();
   const createQuizForCourse = async () => {
@@ -70,7 +70,7 @@ export default function Quizzes() {
       </div>
       <hr />
 
-      <ul id="wd-quiz-list" className="list-group rounded-0">
+      <ul id="wd-quizLlist" className="list-group rounded-0">
         <li className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray ">
           <div className="wd-title p-3 ps-2 bg-secondary d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
@@ -88,7 +88,7 @@ export default function Quizzes() {
           .map((quiz: any) => (
 
 
-            <li className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray">
+            <li key={quiz._id} className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray">
               <div className="quiz-row d-flex wd-lesson p-3 ps-1 align-items-center justify-content-between">
                 <div className="icon-left">
                   <MdRocketLaunch

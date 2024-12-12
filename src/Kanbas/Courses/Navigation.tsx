@@ -20,7 +20,7 @@ export default function CoursesNavigation() {
   return (
     // list-group-item 变成表格 给这些全都框起来
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
-      {links.map((link) => (
+      {/* {links.map((link) => (
         <Link
           id={`wd-course-home-link-${link}`}
           to={`/Kanbas/Courses/${cid}/${link}`}
@@ -28,10 +28,26 @@ export default function CoursesNavigation() {
               ${
                 pathname.includes(link) ? "text-black bg-white active" : "text-danger "
               }`}
+    
+        >
+          {link}
+        </Link>
+      ))} */}
+
+
+      {links.map((link) => (
+        <Link
+          key={link} // 添加 key
+          id={`wd-course-home-link-${link}`}
+          to={`/Kanbas/Courses/${cid}/${link}`}
+          className={`list-group-item border border-0 
+        ${pathname.includes(link) ? "text-black bg-white active" : "text-danger "
+            }`}
         >
           {link}
         </Link>
       ))}
+
     </div>
   );
 }

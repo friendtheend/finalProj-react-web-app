@@ -85,7 +85,7 @@ useEffect(() => {
 
 
 // console.log(quizzes)
-// console.log(questions)
+console.log("all questions",questions)
 // console.log(quizId,"quizId")
 
 

@@ -237,7 +237,7 @@ return (
                 <br/>
 
                 <label
-                    htmlFor="quiz-quizInstructions"
+                  
                     style={{ display: "block", fontWeight: "bold", marginBottom: "10px" }}>
                     Quiz instructions:
                 </label>
@@ -283,11 +283,11 @@ return (
 
                 <div className="wd-assignemnt-editScreen-offset">
                         <div className="row mb-3">
-                            <label htmlFor="wd-points" className="col-sm-4 text-end col-form-label "  style={{ fontWeight: 'bold' }}>
+                            <label htmlFor="wd-quizType" className="col-sm-4 text-end col-form-label "  style={{ fontWeight: 'bold' }}>
                                 Quiz Type
                             </label>
                             <div className="col-sm-8 text-start">
-                                <select id="wd-submission-type" className="form-select"
+                                <select id="wd-quizType" className="form-select"
                                 value={quizType}
                                 onChange={(e) => setQuizType(e.target.value)} 
                                 style={{ width: "50%" }}>
@@ -336,7 +336,7 @@ return (
                                 
                             </label>
                             <div className="col-sm-8 text-start">
-                                <label htmlFor="wd-group" className="col-form-label "  style={{ fontWeight: 'bold' }}>
+                                <label className="col-form-label "  style={{ fontWeight: 'bold' }}>
                                     Options
                                 </label>
                                 <br/>
@@ -347,7 +347,7 @@ return (
                                     checked = {quizShuffleAnswers}
                                     onChange={(e) => setShuffleAnswers(e.target.checked)}
                                 />
-                                <label className="form-check-label" htmlFor="wd-shuffle">
+                                <label className="form-check-label" htmlFor="wd-quizShuffleAnswers">
                                     Shuffle Answers{" "}
                                 </label>
                                 <br/>
@@ -523,7 +523,7 @@ return (
                     <br/>
                     <div className="row mb-3" >
 
-                        <label htmlFor="quiz-Assign" className="col-sm-4 col-form-label text-end" style={{ fontWeight: 'bold' }}>
+                        <label className="col-sm-4 col-form-label text-end" style={{ fontWeight: 'bold' }}>
                             Assign
                         </label>
 
@@ -594,7 +594,6 @@ return (
                     <div className="row mb-3 align-items-center">
 
                         <label
-                            htmlFor="wd-assign"
                             className="col-sm-6 col-form-label"
                         >
                         </label>

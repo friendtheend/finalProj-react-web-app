@@ -37,8 +37,8 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
 
     // const [questionAnswer, setQuestionAnswer] = useState(questions?.answer ?? "answer1");
 
-    // const question = questions.find((q: any) => q._id === quizId);
 
+    const filteredQuestion = questions .filter((question: any) => question.quizId === quizId)
     const handleSave = async () => {
         createQuestionForQuiz();
 
@@ -184,7 +184,7 @@ export default function QuizEditor_Questions({ questions }: { questions: any }) 
 
 
 
-                {questions
+                {filteredQuestion
                     .map((question: any) => (
                         <li key={question._id} className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray">
                             {/* details */}

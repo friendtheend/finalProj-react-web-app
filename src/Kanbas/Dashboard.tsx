@@ -164,7 +164,7 @@ export default function Dashboard({
           {coursesView === "none" ? (
             courses.map((course) => (
               <ul className="list-group">
-                <li key={course._id} className="list-group-item">
+                <li key={course.name} className="list-group-item">
                   <span>{course.name}</span>
                   {userEnrollments.some(
                     (enrollment: any) => enrollment.course === course._id

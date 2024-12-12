@@ -8,11 +8,11 @@ import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 export default function KanbasNavigation() {
   const { pathname } = useLocation();
   const links = [
-    { label: "Dashboard", path: "/Kanbas/Dashboard", icon: AiOutlineDashboard },
-    { label: "Courses", path: "/Kanbas/Dashboard", icon: LiaBookSolid },
-    { label: "Calendar", path: "/Kanbas/Calendar", icon: IoCalendarOutline },
-    { label: "Inbox", path: "/Kanbas/Inbox", icon: FaInbox },
-    { label: "Labs", path: "/Labs", icon: LiaCogSolid },
+    { id:1 ,label: "Dashboard", path: "/Kanbas/Dashboard", icon: AiOutlineDashboard },
+    { id:2 , label: "Courses", path: "/Kanbas/Dashboard", icon: LiaBookSolid },
+    { id:3,label: "Calendar", path: "/Kanbas/Calendar", icon: IoCalendarOutline },
+    { id:4,label: "Inbox", path: "/Kanbas/Inbox", icon: FaInbox },
+    { id:5,label: "Labs", path: "/Labs", icon: LiaCogSolid },
   ];
 
   return (
@@ -57,7 +57,7 @@ export default function KanbasNavigation() {
       </Link>
       {links.map((link) => (
         <Link
-          key={link.path}
+          key={link.id}
           to={link.path}
           className={`list-group-item text-center border-0 bg-black 
               ${

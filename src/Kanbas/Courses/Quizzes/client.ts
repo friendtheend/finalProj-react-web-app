@@ -17,3 +17,5 @@ export const updateQuiz = async (quiz: any) => {
     return data;
 };
 
+
+

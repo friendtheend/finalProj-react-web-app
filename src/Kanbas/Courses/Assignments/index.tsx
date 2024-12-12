@@ -93,7 +93,7 @@ export default function Assignments() {
           // .filter((assignment: any) => assignment.course === cid)
           .map((assignment: any) => (
             
-            <li className="wd-assignment-list-item list-group-item p-0 mb-0 fs-5 border-gray">
+            <li key={assignment._id} className="wd-assignment-list-item list-group-item p-0 mb-0 fs-5 border-gray">
               
               <div className="assignment-row d-flex wd-lesson p-3 ps-1 align-items-center justify-content-between">
                 {/* 左边的Icon */}
