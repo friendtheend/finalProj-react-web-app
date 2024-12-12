@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import {
-    setQuizzes,
+    setQuizzes, updateQuiz,
   } from "./reducer";
 
   import * as coursesClient from "../client";
@@ -15,7 +15,7 @@ import {
     setQuestions,
   } from "./Questions/reducer";
 import { useSearchParams } from "react-router-dom";
-
+import * as quizzesClient from "./client";
 
 
 
@@ -41,7 +41,6 @@ const fetchQuestions = async () => {
     const questions = await coursesClient.findQuestionsForQuiz(cid , quizId);
     dispatch(setQuestions(questions));
   };
-
 
 
   // 更新 quiz 的总分

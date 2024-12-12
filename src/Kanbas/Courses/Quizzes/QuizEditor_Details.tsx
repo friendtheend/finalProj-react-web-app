@@ -23,16 +23,17 @@ import { Link } from "react-router-dom";
 export default function QuizEditor_Details({quizzes}:{quizzes:any}) {
 const { cid, quizId } = useParams();
 // const { quizzes } = useSelector((state: any) => state.quizzesReducer);
+
 const quiz = quizzes.find((q: any) => q._id === quizId);
 const dispatch = useDispatch();
 const navigate = useNavigate();
-
+console.log(quiz.timeAllowed);
 const [quizType, setQuizType] = useState(quiz?.type ?? "Graded Quiz");
 const [quizName, setQuizName] = useState(quiz?.title ?? "Unnamed Quiz");
 const [quizAssignmentGroup, setAssignmentGroup] = useState(quiz?.assignmentGroup ?? "Quizzes");
 const [quizShuffleAnswers, setShuffleAnswers] = useState(quiz?.shuffleAnswers ?? true);
-const [quizTimeLimit, setTimeLimit] = useState(quiz?.timelimit ?? true);
-const [quizTimeAllowed, setTimeAllowed] = useState(quiz?.timeallowed ?? 20);
+const [quizTimeLimit, setTimeLimit] = useState(quiz?.timeLimit ?? true);
+const [quizTimeAllowed, setTimeAllowed] = useState(quiz?.timeAllowed ?? 20);
 const [quizAccessCode, setAccessCode] = useState(quiz?.accessCode ?? "");
 const [quizmultiAttempts, setmultiAttempts] = useState(quiz?.multipleAttempts ?? false);
 const [quizAttemptsAllowed, setAttemptsAllowed] = useState(quiz?.attemptsAllowed ?? 2);
@@ -206,7 +207,7 @@ const handleSave = async () => {
 
       console.log("Updated Assignment:", updatedQuiz);
       await saveQuiz(updatedQuiz);
-      dispatch(updateQuiz(module));
+      dispatch(updateQuiz(updateQuiz));
       
     }
     navigate(`/Kanbas/Courses/${cid}/Quizzes`);

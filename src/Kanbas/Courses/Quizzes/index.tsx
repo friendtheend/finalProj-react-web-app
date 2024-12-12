@@ -63,12 +63,23 @@ export default function Quizzes() {
     dispatch(setQuestions(questions));
   };
 
+  // 获取 quiz 的总分
+  function getQuizPoints(questions:any, quizId:any) {
 
-  function calculateTotalPoints(question_total:any ) {
-    // Use reduce to sum up the pts for each question
-    return question_total.reduce((total:any, question:any) => total + (question.pts || 0), 0);
-  }
+    // 1. 找到所有属于当前 quizId 的问题
+    const relatedQuestions = questions.filter((question: any) => question.quizId === quizId);
 
+    // 2. 确保 pts 是数字，避免类型错误
+    const totalPoints = relatedQuestions.reduce((sum: number, question: any) => {
+      const pts = Number(question.pts);  // 确保 pts 是数字类型
+      // console.log(`question: ${question.title}, pts: ${pts}`);  // 打印每个问题的 pts
+      return sum + (isNaN(pts) ? 0 : pts);  // 如果 pts 不是有效数字，使用 0
+    }, 0);  // 初始值为 0
+
+    // console.log('Total Points:', totalPoints);  // 打印最终的总分
+    return totalPoints
+
+    }
 
   useEffect(() => {
     fetchQuizzes();
@@ -137,7 +148,7 @@ export default function Quizzes() {
                       <>
                         <b>Available</b>{" "} {format(quiz.availableFromDate, "MMM d 'at' h a")}
                       </>
-                    )} | <b>Due</b> {format(quiz.dueDate, "MMM d 'at' h a")} | {calculateTotalPoints(questions.filter((question:any) => question.quizId === quiz._id))} pts | {questions.filter((question:any) => question.quizId === quiz._id).length} Questions
+                    )} | <b>Due</b> {format(quiz.dueDate, "MMM d 'at' h a")} | {getQuizPoints(questions, quiz._id)} pts | {questions.filter((question:any) => question.quizId === quiz._id).length} Questions
 
                 </div>
 

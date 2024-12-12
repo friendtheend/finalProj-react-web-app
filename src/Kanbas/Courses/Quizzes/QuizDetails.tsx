@@ -15,6 +15,7 @@ export default function QuizDetails() {
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const [role, setROLE] = useState(currentUser.role);
+    const { questions } = useSelector((state: any) => state.questionsReducer);
 
     const quiz = quizzes.find((q: any) => q._id === quizId);
     const dispatch = useDispatch();
@@ -55,7 +56,32 @@ export default function QuizDetails() {
         navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/do`);
     };
 
+    const fetchQuestions = async () => {
+        const questions = await coursesClient.findQuestionsForCourse(cid);
+        dispatch(setQuestions(questions));
+    };
 
+    function getQuizPoints(questions:any, quizId:any) {
+
+        // 1. 找到所有属于当前 quizId 的问题
+        const relatedQuestions = questions.filter((question: any) => question.quizId === quizId);
+    
+        // 2. 确保 pts 是数字，避免类型错误
+        const totalPoints = relatedQuestions.reduce((sum: number, question: any) => {
+          const pts = Number(question.pts);  // 确保 pts 是数字类型
+        //   console.log(`question: ${question.title}, pts: ${pts}`);  // 打印每个问题的 pts
+          return sum + (isNaN(pts) ? 0 : pts);  // 如果 pts 不是有效数字，使用 0
+        }, 0);  // 初始值为 0
+    
+        // console.log('Total Points:', totalPoints);  // 打印最终的总分
+        return totalPoints
+    
+    }
+
+    useEffect(() => {
+        fetchQuestions();
+     }, []);
+    
 
 
     return (
@@ -111,7 +137,7 @@ export default function QuizDetails() {
                             Points
                         </label>
                         <div className="col-sm-8 text-start">
-                            {quizPoints}
+                            {getQuizPoints(questions, quizId)}
                         </div>
                     </div>
 
