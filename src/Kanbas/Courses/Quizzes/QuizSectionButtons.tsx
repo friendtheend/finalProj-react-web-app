@@ -54,7 +54,27 @@ export default function QuizSectionButtons({quiz1, qID, deleteQuiz, updateStatus
 
   return (
     <div className="float-end"  ref={dropdownRef}>
-      {quiz1.publish ? <GreenCheckmark /> : <MdBlockFlipped style={{ color: "red"}}/>}
+      {quiz1.publish ?
+      <button onClick={() => {updateStatus({...quiz1, publish:!quiz1.publish}); setIsOpen(false)}}
+      style={{
+        background: 'none', 
+        border: 'none',   
+        padding: 0,       
+        cursor: 'pointer', 
+      }}>
+        <GreenCheckmark />
+      </button> 
+      : 
+      <button onClick={() => {updateStatus({...quiz1, publish:!quiz1.publish}); setIsOpen(false)}}
+      style={{
+        background: 'none', 
+        border: 'none',   
+        padding: 0,        
+        cursor: 'pointer',  
+      }}>
+        <MdBlockFlipped style={{ color: "red"}}/>
+      </button>
+      } 
 
       <IoEllipsisVertical 
       className="fs-4" 
