@@ -77,7 +77,7 @@ export default function AddQuestionPage(
     //     setAnswers(updatedAnswers);
 
     // };
-    const handleCorrectAnswerChange = (index: any) => {
+    const handleTrueFalseCorrectAnswerChange = (index: any) => {
         // // 设置选中的正确答案的索引
         // setSelectedAnswerIndex(index);
 
@@ -86,7 +86,7 @@ export default function AddQuestionPage(
         //     ...answer,
         //     isCorrect: i === index, // 仅将选中索引对应的答案设置为 true，其余设置为 false
         // }));
-        const updatedAnswers = answers.map((answer:any) =>
+        const updatedAnswers = answers.map((answer: any) =>
             answer.id === index
                 ? { ...answer, isCorrect: true }
                 : { ...answer, isCorrect: false }
@@ -95,12 +95,18 @@ export default function AddQuestionPage(
         setAnswers(updatedAnswers);
     };
 
+
+    const handleCorrectAnswerChange = (index: any) => {
+
+        const updatedAnswers = answers.map((answer: any, i: any) => ({
+            ...answer,
+            isCorrect: i === index, // 仅将选中索引对应的答案设置为 true，其余设置为 false
+        }));
+
+        setAnswers(updatedAnswers);
+    };
+
     const handleAnswerChange = (index: any, value: any) => {
-        // const updatedAnswers = [...answers];
-        // updatedAnswers[index].text = value;
-        console.log("the question type", questionType)
-        console.log("the value", value)
-        console.log(question.answers.isCorrect)
 
         if (questionType === "True/False") {
             setQuestionAnswerIsCorrect("True");
@@ -139,36 +145,36 @@ export default function AddQuestionPage(
             case "True/False":
 
                 return (
-                 
-<div>
-        {answers.map((answer:any) => (
-            <div key={answer.id} className="d-flex align-items-center ms-2 mt-3">
-                {/* Radio Button */}
-                <input
-                    type="radio"
-                    name={`correctAnswer-${answer.id}`} // 每个 radio 按钮都有唯一的 name
-                    value={answer.text}
-                    checked={answer.isCorrect} // 根据 isCorrect 设置是否选中
-                    onChange={() => handleCorrectAnswerChange(answer.id)} // 更新状态
-                />
-                <label className="ms-2" style={{ fontWeight: "bold" }}>
-                    {answer.text}
-                </label>
-                {/* 显示 "Correct" */}
-                <span
-                    style={{
-                        marginLeft: "20px",
-                        color: answer.isCorrect ? "green" : "transparent",
-                        fontWeight: "bold",
-                        minWidth: "80px", // 确保布局对齐
-                        display: "inline-block",
-                    }}
-                >
-                    {answer.isCorrect ? "Correct" : ""}
-                </span>
-            </div>
-        ))}
-    </div>
+
+                    <div>
+                        {answers.map((answer: any) => (
+                            <div key={answer.id} className="d-flex align-items-center ms-2 mt-3">
+                                {/* Radio Button */}
+                                <input
+                                    type="radio"
+                                    name={`correctAnswer-${answer.id}`} // 每个 radio 按钮都有唯一的 name
+                                    value={answer.text}
+                                    checked={answer.isCorrect} // 根据 isCorrect 设置是否选中
+                                    onChange={() => handleTrueFalseCorrectAnswerChange(answer.id)} // 更新状态
+                                />
+                                <label className="ms-2" style={{ fontWeight: "bold" }}>
+                                    {answer.text}
+                                </label>
+                                {/* 显示 "Correct" */}
+                                <span
+                                    style={{
+                                        marginLeft: "20px",
+                                        color: answer.isCorrect ? "green" : "transparent",
+                                        fontWeight: "bold",
+                                        minWidth: "80px", // 确保布局对齐
+                                        display: "inline-block",
+                                    }}
+                                >
+                                    {answer.isCorrect ? "Correct" : ""}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
 
                 );
 
