@@ -43,12 +43,45 @@ const fetchQuestions = async () => {
   };
 
 
+
+  // 更新 quiz 的总分
+  function updateQuizPoints() {
+  // 1. 确保 quiz 和 questions 数据已加载
+  if (!quiz || !questions || questions.length === 0) {
+    console.log('quiz or questions are missing or empty');
+    return;
+  }
+
+  // 2. 找到所有属于当前 quizId 的问题
+  const relatedQuestions = questions.filter((question: any) => question.quizId === quizId);
+
+  // 3. 确保 pts 是数字，避免类型错误
+  const totalPoints = relatedQuestions.reduce((sum: number, question: any) => {
+    const pts = Number(question.pts);  // 确保 pts 是数字类型
+    console.log(`question: ${question.title}, pts: ${pts}`);  // 打印每个问题的 pts
+    return sum + (isNaN(pts) ? 0 : pts);  // 如果 pts 不是有效数字，使用 0
+  }, 0);  // 初始值为 0
+
+  console.log('Total Points:', totalPoints);  // 打印最终的总分
+  setPoint(totalPoints);  // 更新 quiz 的点数
+  }
+
+
 useEffect(() => {
 fetchQuizzes();
 fetchQuestions();
-}, []);
+}, [cid, quizId]);
 
+useEffect(() => {
+    updateQuizPoints();
+  }, [questions]);
 
+  // 每次 quiz 的 publish 状态发生变化时，更新状态
+  useEffect(() => {
+    if (quiz) {
+      setPublish(quiz.publish);
+    }
+  }, [quiz]);
 
 
 // console.log(quizzes)
