@@ -12,7 +12,7 @@ import {
   deleteQuiz,
   updateQuiz,
 } from "./reducer";
-// std 
+// std
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
@@ -58,6 +58,7 @@ export default function Quizzes() {
 
 
   return (
+
     <div id="wd-quizzes">
       <div>
         <QuizControls

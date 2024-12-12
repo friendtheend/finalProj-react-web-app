@@ -52,12 +52,16 @@ const EditButtonClick = () => {
 navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/editorDetail`);
 };
 
+const PreviewButtonClick = () => {
+     navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/preview`);
+};
+
 
 return (
     <form>
     <div id='quiz-details'>
         <div id='quiz-edit' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <button className="btn btn-md btn-secondary me-1">
+            <button className="btn btn-md btn-secondary me-1" onClick={PreviewButtonClick}>
                 Preview
             </button>
 
