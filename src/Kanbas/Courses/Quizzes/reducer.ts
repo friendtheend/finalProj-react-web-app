@@ -34,9 +34,9 @@ const quizzesSlice = createSlice({
         webcamRequired: quiz.webcamRequired, 
         lockQuestionsAfterAnswering: quiz.lockQuestionAfterAnswering, 
         viewResults: quiz.viewResults,
-        dueDate: quiz.DueDate, 
+        dueDate: quiz.dueDate,
         availableFromDate: quiz.availableFromDate, 
-        untilDate: quiz.UntilDate, 
+        untilDate: quiz.untilDate,
         publish: quiz.publish,
         description: quiz.description,};
       state.quizzes = [...state.quizzes, newQuiz] as any;

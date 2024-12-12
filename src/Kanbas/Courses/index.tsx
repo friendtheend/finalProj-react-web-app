@@ -21,6 +21,7 @@ import {
   setQuizzes,
 
 } from "./Quizzes/reducer";
+import QuizPreview from "./Quizzes/QuizPreview";
 
 export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();
@@ -75,6 +76,7 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Quizzes" element={<Quizzes />} />
             <Route path="Quizzes/:quizId" element={<QuizDetails />} />
             <Route path="Quizzes/:quizId/editorDetail" element={<QuizEditor />} />
+            <Route path="Quizzes/:quizId/preview" element={<QuizPreview />} />
             <Route path="Quizzes/:quizId/questionEditor/:questionId" element={
               <QuestionEditor 
             />
