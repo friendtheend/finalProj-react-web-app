@@ -43,6 +43,8 @@ export const fetchAllCourses = async () => {
     const { data } = await axios.get(COURSES_API);
     return data;
 };
+
+
 export const deleteCourse = async (id: string) => {
     const { data } = await axios.delete(`${COURSES_API}/${id}`);
     return data;
@@ -74,5 +76,12 @@ export const findQuizzesForCourse = async (courseId: string) => {
 export const findQuestionsForQuiz = async (courseId:any, quizId: any) => {
     const response = await axios
         .get(`${COURSES_API}/${courseId}/quizzes/${quizId}`);
+    return response.data;
+};
+
+
+export const findQuestionsForCourse = async (courseId:any) => {
+    const response = await axios
+        .get(`${COURSES_API}/${courseId}/questions`);
     return response.data;
 };

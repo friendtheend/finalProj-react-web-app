@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import {
     setQuizzes,
   } from "./reducer";
+import { setQuestions } from "./Questions/reducer";
 import accountReducer from "../../Account/reducer";
 
 export default function QuizDetails() {
@@ -40,6 +41,8 @@ export default function QuizDetails() {
     const [quizAvailableUntilDate, setQuizAvailableUntilDate] = useState(quiz?.untilDate ?? "2024-09-01T09:00:00");
 
 
+
+
     const EditButtonClick = () => {
         navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/editorDetail`);
     };
@@ -52,8 +55,21 @@ export default function QuizDetails() {
         navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/do`);
     };
 
+
+
+
     return (
-        <form>
+        <div>
+        { role === 'STUDENT' && new Date() > new Date(quizDueDate) ? 
+        (    
+            <div>
+                <br />
+                <hr />
+                quiz is closed
+            </div>
+        )
+        :
+        (<form>
             <div id='quiz-details'>
                 <div id='quiz-option' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
@@ -74,10 +90,6 @@ export default function QuizDetails() {
                             </button>
                         </>
                     )}
-
-
-
-
 
                 </div>
                 <br /><hr />
@@ -232,6 +244,9 @@ export default function QuizDetails() {
                 </div>
 
             </div>
-        </form>
+        </form>)}
+        </div>
+
     );
+
 }

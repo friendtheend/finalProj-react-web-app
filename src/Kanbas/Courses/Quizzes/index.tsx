@@ -20,14 +20,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { format } from 'date-fns';
 import QuizSectionButtons from "./QuizSectionButtons";
 import {findQuestionsForQuiz} from "../client";
+import accountReducer from "../../Account/reducer";
+import { setQuestions } from "./Questions/reducer";
+
 
 export default function Quizzes() {
   const { cid } = useParams();
   const [QuizName, setQuizName] = useState("");
   const [selectedquizID, setSelectedQuizID] = useState("Null")
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
-  // console.log("all quizess",quizzes)
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const [role, setROLE] = useState(currentUser.role);
   const now = new Date(); // 日期判断
+  const { questions } = useSelector((state: any) => state.questionsReducer);
+
   const dispatch = useDispatch();
   const createQuizForCourse = async () => {
     if (!cid) return;
@@ -47,14 +53,26 @@ export default function Quizzes() {
     dispatch(updateQuiz(quiz));
   };
 
-
   const fetchQuizzes = async () => {
     const quizzes = await coursesClient.findQuizzesForCourse(cid as string);
     dispatch(setQuizzes(quizzes));
   };
 
+  const fetchQuestions = async () => {
+    const questions = await coursesClient.findQuestionsForCourse(cid);
+    dispatch(setQuestions(questions));
+  };
+
+
+  function calculateTotalPoints(question_total:any ) {
+    // Use reduce to sum up the pts for each question
+    return question_total.reduce((total:any, question:any) => total + (question.pts || 0), 0);
+  }
+
+
   useEffect(() => {
     fetchQuizzes();
+    fetchQuestions();
   }, []);
 
 
@@ -86,7 +104,7 @@ export default function Quizzes() {
         {quizzes
           .map((quiz: any) => (
 
-
+            ((role !== 'STUDENT') || quiz.publish)  && (
             <li key={quiz._id} className="wd-quiz-list-item list-group-item p-0 mb-0 fs-5 border-gray">
               <div className="quiz-row d-flex wd-lesson p-3 ps-1 align-items-center justify-content-between">
                 <div className="icon-left">
@@ -119,22 +137,24 @@ export default function Quizzes() {
                       <>
                         <b>Available</b>{" "} {format(quiz.availableFromDate, "MMM d 'at' h a")}
                       </>
-                    )} | <b>Due</b> {format(quiz.dueDate, "MMM d 'at' h a")} | {quiz.point} pts | {quiz.question_nums} Questions
+                    )} | <b>Due</b> {format(quiz.dueDate, "MMM d 'at' h a")} | {calculateTotalPoints(questions.filter((question:any) => question.quizId === quiz._id))} pts | {questions.filter((question:any) => question.quizId === quiz._id).length} Questions
 
                 </div>
 
 
                 {/* 右边的Icon */}
+                {(role !== 'STUDENT') && (
                 <div className="icon-right" onClick={() => setSelectedQuizID(quiz._id)}>
                   <QuizSectionButtons
                     quiz1={quiz}
                     qID={selectedquizID}
                     deleteQuiz={(qID) => removeQuiz(qID)}
                     updateStatus={(quiz) => updateStatus(quiz)} />
-                </div>
-
+                </div>)}
+                    
               </div>
             </li>
+            )
           ))}
       </ul>
 
