@@ -27,7 +27,6 @@ const { cid, quizId } = useParams();
 const quiz = quizzes.find((q: any) => q._id === quizId);
 const dispatch = useDispatch();
 const navigate = useNavigate();
-console.log(quiz.timeAllowed);
 const [quizType, setQuizType] = useState(quiz?.type ?? "Graded Quiz");
 const [quizName, setQuizName] = useState(quiz?.title ?? "Unnamed Quiz");
 const [quizAssignmentGroup, setAssignmentGroup] = useState(quiz?.assignmentGroup ?? "Quizzes");
@@ -51,9 +50,6 @@ const [quizDueDate, setQuizDueDate] = useState(quiz?.dueDate ?? "2024-09-01T09:0
 const [quizAvailableFromDate, setQuizAvailableFromDate] = useState(quiz?.availableFromDate ?? "2024-08-15T09:00:00");
 const [quizAvailableUntilDate, setQuizAvailableUntilDate] = useState(quiz?.untilDate ?? "2024-09-01T09:00:00");
 const [activeTab, setActiveTab] = useState("details");
-
-console.log(quizAvailableFromDate)
-
 const createQuizForCourse = async () => {
     if (!cid) return;
     const newQuiz = { 
@@ -83,7 +79,6 @@ const createQuizForCourse = async () => {
         publish: quizPublish,
         description: quizDesc,};
     const quiz = await coursesClient.createQuizForCourse(cid, newQuiz);
-    console.log("New Quiz:", quiz); 
     dispatch(addQuiz(quiz));
   };
   
